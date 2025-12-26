@@ -19,14 +19,14 @@ export default defineSchema({
         description:v.string(),
         amount:v.number(),
         category:v.optional(v.string()),
-        date:v.date(),
+        date:v.number(), //timestamp
         paidByUserId:v.id("users"), // Reference to users table
         splitType:v.string(), // "equal", "percentage", "exact"
-        splits:v.array({
+        splits:v.array(v.object({
             userId:v.id("users"), // Reference to users table
             amount:v.number(),// Amount owed by the user
             paid:v.boolean(),
-        }),
+        })),
         groupId:v.optional(v.id("groups")), // null for one-on-one expenses
         createdBy: v.id("users"), // Reference to users table
     })
@@ -38,7 +38,7 @@ export default defineSchema({
     settlements:defineTable({
         amount:v.number(),
         note:v.optional(v.string()),
-        date:v.date(), //timestamp
+        date:v.number(), //timestamp
         paidByUserId:v.id("users"), // Reference to users table
         receivedByUserId:v.id("users"), // Reference to users table
         groupId:v.optional(v.id("groups")), // null for one-on-one settlements
