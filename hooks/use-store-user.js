@@ -8,6 +8,8 @@ import { api } from "../convex/_generated/api";
 export function useStoreUser() {
   const { isLoading, isAuthenticated } = useConvexAuth();
   const { user } = useUser();
+  console.log(user);
+  
   // When this state is set we know the server
   // has stored the user.
   const [userId, setUserId] = useState(null);

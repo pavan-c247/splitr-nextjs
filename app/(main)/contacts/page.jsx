@@ -45,7 +45,7 @@ export default function ContactsPage() {
   }
 
   const { users, groups } = data || { users: [], groups: [] };
-
+  
   return (
     <div className="container mx-auto py-6">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-6">
@@ -72,7 +72,7 @@ export default function ContactsPage() {
           ) : (
             <div className="flex flex-col gap-4">
               {users.map((user) => (
-                <Link key={user.id} href={`/person/${user.id}`}>
+                <Link key={user._id} href={`/person/${user._id}`}>
                   <Card className="hover:bg-muted/30 transition-colors cursor-pointer">
                     <CardContent className="py-4">
                       <div className="flex items-center justify-between">
@@ -114,7 +114,7 @@ export default function ContactsPage() {
           ) : (
             <div className="flex flex-col gap-4">
               {groups.map((group) => (
-                <Link key={group.id} href={`/groups/${group.id}`}>
+                <Link key={group._id} href={`/groups/${group._id}`}>
                   <Card className="hover:bg-muted/30 transition-colors cursor-pointer">
                     <CardContent className="py-4">
                       <div className="flex items-center justify-between">
