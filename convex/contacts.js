@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";    
 
 // 1. getAllContacts – 1‑to‑1 expense contacts + groups
 
@@ -12,16 +13,17 @@ export const getAllContacts = query({
         // Using 'by_user_and_groups' get all the 'expenses' for the particular user and 'group' in this case will be undefined
         const expensesYouPaid = await ctx  
             .db.query('expenses')
-            .withIndex('by_user_and_group', (q) => {
-                q.eq('paidByUserId', currentUser._id).eq('groupId', undefined);
-            }).collect();
+            .withIndex('by_user_and_group', (q) => 
+                q.eq('paidByUserId', currentUser._id).eq('groupId', undefined)
+            ).collect();
 
         // Find all of the expenses which are of the user but user has not paid for them 
         const expensesNotPaidYou = (await ctx.db
             .query('expenses')
-            .withIndex('by_group', (q) => {
-                q.eq('groupId', undefined);
-            }).collect()).filter(e => e.paidByUserId !== currentUser._id && e.splits.some(s => s.userId === currentUser._id));
+            .withIndex('by_group', (q) => 
+                q.eq('groupId', undefined)
+            )
+            .collect()).filter(e => e.paidByUserId !== currentUser._id && e.splits.some(s => s.userId === currentUser._id));
 
         const personalExpenses = [...expensesYouPaid, ...expensesNotPaidYou];
 
