@@ -148,14 +148,19 @@ export const getGroupExpenses = query({
         ids.forEach((a) => {
             ids.forEach((b) => {
                 if (a >= b) return; // visit each unordered pair once
+                
+                //calculate the the net debt between users
                 const diff = ledger[a][b] - ledger[b][a];
                 if (diff > 0) {
+                    // User A owes User B (net)
                     ledger[a][b] = diff;
                     ledger[b][a] = 0;
                 } else if (diff < 0) {
+                    // User B owes User A (net)
                     ledger[b][a] = -diff;
                     ledger[a][b] = 0;
                 } else {
+                    // They are even 
                     ledger[a][b] = ledger[b][a] = 0;
                 }
             });
