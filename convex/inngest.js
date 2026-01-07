@@ -132,6 +132,7 @@ export const getUsersWithExpenses = query({
     oneMonthAgo.setMonth(now.getMonth() - 1);
     const monthStart = oneMonthAgo.getTime();
 
+    // get those expenses where user is the payer / user is spending
     for (const user of users) {
       // First, check expenses where this user is the payer
       const paidExpenses = await ctx.db
